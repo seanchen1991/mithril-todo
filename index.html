@@ -5,33 +5,62 @@
 
 // this application only has one `todo` node_module
 var todo = {};
-
 // for simplicity, we use this module to namespace the model classes
-
 // the Todo class has two properties
 todo.Todo = function(data) {
   this.description = m.prop(data.description);
   this.done = m.prop(false);
 };
-
 // the Todolist class is a list of Todo's
 todo.TodoList = Array;
-
 var myTask = new todo.Todo({description: "Write code"});
-
 // read the description
 myTask.description(); // write code
-
 // is it done?
 var isDone = myTask.done(); // isDone == false
-
 // mark as done 
 myTask.done(true); // true
-
 // now it's done
 isDone = myTask.done(); // isDone == true
-
 var list = new todo.TodoList();
 list.length; // 0
+
+// define the view-model
+todo.vm = {}
+todo.vm.init = function() {
+  // a running list of todos 
+  this.list = new todo.TodoList();
+  // a slot to store the name of a new todo before it is created
+  this.description = m.prop("");
+  // adds a todo to the list, and clears the description field for user convenience
+  this.add = function(description) {
+    if (description()) {
+      this.list.push(new todo.Todo({description: description()}));
+    }
+  };
+}
+
+// define the controller
+todo.controller = function() {
+  todo.vm.init();
+}
+
+// define the view
+todo.view = function() {
+  return m("html", [
+    m("body", [
+      m("input"),
+      m("button", "Add"),
+      m("table", [
+        m("tr", [
+          m("td", [
+            m("input[type=checkbox]")
+          ]),
+          m("td", "task description"),
+        ])
+      ])
+    ])
+  ]);
+};
 
 </script>
