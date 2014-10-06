@@ -1,0 +1,37 @@
+<!doctype html>
+<title> Todo App</title>
+<script src="/node_modules/mithril/mithirl.min.js"></script>script>
+<script>
+
+// this application only has one `todo` node_module
+var todo = {};
+
+// for simplicity, we use this module to namespace the model classes
+
+// the Todo class has two properties
+todo.Todo = function(data) {
+  this.description = m.prop(data.description);
+  this.done = m.prop(false);
+};
+
+// the Todolist class is a list of Todo's
+todo.TodoList = Array;
+
+var myTask = new todo.Todo({description: "Write code"});
+
+// read the description
+myTask.description(); // write code
+
+// is it done?
+var isDone = myTask.done(); // isDone == false
+
+// mark as done 
+myTask.done(true); // true
+
+// now it's done
+isDone = myTask.done(); // isDone == true
+
+var list = new todo.TodoList();
+list.length; // 0
+
+</script>
